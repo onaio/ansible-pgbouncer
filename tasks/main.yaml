@@ -1,0 +1,36 @@
+---
+- include: ubuntu.yaml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Copy pgbouncer default
+  tags: pgbouncer
+  template:
+    src: "roles/pgbouncer/templates/etc/default/pgbouncer"
+    dest: "/etc/default/pgbouncer"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy pgbouncer config files
+  tags: pgbouncer
+  template:
+    src: "roles/pgbouncer/templates/etc/pgbouncer/{{ item }}"
+    dest: "/etc/pgbouncer/{{ item }}"
+    owner: postgres
+    group: postgres
+    mode: 0640
+  with_items:
+    - pgbouncer.ini
+    - pg_hba.conf
+    - userlist.txt
+
+- include: reload.yaml
+  when: reload_not_restart
+
+- name: Restart pgbouncer
+  tags: pgbouncer
+  when: not reload_not_restart
+  service:
+    name: pgbouncer
+    state: restarted
+    enabled: yes

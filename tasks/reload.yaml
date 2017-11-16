@@ -1,0 +1,19 @@
+---
+- name: Pause connections to the master db before restarting service
+  tags:
+    - pgbouncer
+    - pgbouncer-pause
+  raw: "PGPASSWORD={{ pgsql_password }} /usr/bin/psql -U {{ pgsql_user }} -h 127.0.0.1 -p 6432 -c \"PAUSE;\" pgbouncer"
+
+- name: Reload pgbouncer
+  tags: pgbouncer
+  service:
+    name: pgbouncer
+    state: reloaded
+    enabled: yes
+
+- name: Resume connections to the master db before restarting service
+  tags:
+    - pgbouncer
+    - pgbouncer-resume
+  raw: "PGPASSWORD={{ pgsql_password }} /usr/bin/psql -U {{ pgsql_user }} -h 127.0.0.1 -p 6432 -c \"RESUME;\" pgbouncer"
