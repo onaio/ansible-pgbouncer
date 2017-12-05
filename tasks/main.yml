@@ -1,5 +1,5 @@
 ---
-- include: ubuntu.yaml
+- include: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
 - name: Copy pgbouncer default
@@ -24,7 +24,7 @@
     - pg_hba.conf
     - userlist.txt
 
-- include: reload.yaml
+- include: reload.yml
   when: reload_not_restart
 
 - name: Restart pgbouncer
