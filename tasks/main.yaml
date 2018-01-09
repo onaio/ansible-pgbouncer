@@ -5,7 +5,7 @@
 - name: Copy pgbouncer default
   tags: pgbouncer
   template:
-    src: "roles/pgbouncer/templates/etc/default/pgbouncer"
+    src: "templates/etc/default/pgbouncer"
     dest: "/etc/default/pgbouncer"
     owner: root
     group: root
@@ -14,7 +14,7 @@
 - name: Copy pgbouncer config files
   tags: pgbouncer
   template:
-    src: "roles/pgbouncer/templates/etc/pgbouncer/{{ item }}"
+    src: "templates/etc/pgbouncer/{{ item }}"
     dest: "/etc/pgbouncer/{{ item }}"
     owner: postgres
     group: postgres
