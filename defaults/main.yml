@@ -1,2 +1,14 @@
 reload_not_restart: False
 ignore_startup_parameters:
+
+# TLS mode to use for connections to PostgreSQL servers. Supported values:
+#
+# disable: Plain TCP. TCP is not even requested from the server. Default.
+# prefer: TLS connection is always requested first from PostgreSQL, when refused connection will be established over plain TCP. Server certificate is not validated.
+# require: Connection must go over TLS. If server rejects it, plain TCP is not attempted. Server certificate is not validated.
+# verify-ca: Connection must go over TLS and server certificate must be valid according to server_tls_ca_file. Server host name is not checked against certificate.
+# verify-full: Connection must go over TLS and server certificate must be valid according to server_tls_ca_file. Server host name must match certificate information. 
+pgbouncer_server_tls_sslmode: "verify-ca"
+
+# Contents of the TLS CA certificate the PostgreSQL database's certificate is signed using.
+pgbouncer_server_tls_ca_content: "{{ lookup('url', 'https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem', split_lines=false) }}"
