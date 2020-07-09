@@ -1,9 +1,25 @@
 ---
+- name: Make sure the CA certificates are available
+  apt:
+    pkg: ca-certificates
+    state: present
+
+- name: Add PgBouncer repository apt-key
+  apt_key:
+    id: "{{ pgbouncer_apt_key_id }}"
+    url: "{{ pgbouncer_apt_key_url }}"
+    state: present
+  when: pgbouncer_apt_key_url and pgbouncer_apt_key_id and pgbouncer_install_repository
+
+- name: Add PgBouncer repository
+  apt_repository:
+    repo: "{{ pgbouncer_apt_repository }}"
+    state: present
+  when: pgbouncer_apt_repository | default('') != '' and pgbouncer_install_repository
+
 - name: ensure pgbouncer is installed
   apt:
-    pkg: "{{ item }}"
-    state: latest
+    pkg: "pgbouncer={{ pgbouncer_version }}"
+    state: present
     update_cache: yes
     cache_valid_time: 600
-  with_items:
-    - pgbouncer
