@@ -1,4 +1,4 @@
-pgbouncer_version: "1.13.*"
+pgbouncer_version: "1.14.*"
 
 reload_not_restart: False
 ignore_startup_parameters:
