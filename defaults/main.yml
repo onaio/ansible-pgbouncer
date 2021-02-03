@@ -22,3 +22,5 @@ pgbouncer_apt_key_url: "https://www.postgresql.org/media/keys/{{ pgbouncer_apt_k
 # Version of the PostgreSQL apt repository
 pgbouncer_apt_postgresql_version: 12
 pgbouncer_apt_repository: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main {{ pgbouncer_apt_postgresql_version }}"
+pgbouncer_listen_addr: 127.0.0.1
+pgbouncer_listen_port: 6432
