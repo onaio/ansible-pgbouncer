@@ -3,6 +3,19 @@ pgbouncer_version: "1.13.*"
 reload_not_restart: False
 ignore_startup_parameters:
 
+
+# Authentication method to use for users
+#
+# pam: PAM is used to authenticate users, auth_file is ignored. This method is not compatible with databases using the auth_user option. The service name reported to PAM is “pgbouncer”. pam is not supported in the HBA configuration file.
+# hba: The actual authentication type is loaded from auth_hba_file. This allows different authentication methods for different access paths, for example: connections over Unix socket use the peer auth method, connections over TCP must use TLS.
+# cert: Client must connect over TLS connection with a valid client certificate. The user name is then taken from the CommonName field from the certificate.
+# md5: Use MD5-based password check. This is the default authentication method. auth_file may contain both MD5-encrypted and plain-text passwords. If md5 is configured and a user has a SCRAM secret, then SCRAM authentication is used automatically instead.
+# scram-sha-256: Use password check with SCRAM-SHA-256. auth_file has to contain SCRAM secrets or plain-text passwords.
+# plain: The clear-text password is sent over the wire. Deprecated.
+# trust: No authentication is done. The user name must still exist in auth_file.
+# any: Like the trust method, but the user name given is ignored. Requires that all databases are configured to log in as a specific user. Additionally, the console database allows any user to log in as admin.
+pgbouncer_auth_type: "hba"
+
 # TLS mode to use for connections to PostgreSQL servers. Supported values:
 #
 # disable: Plain TCP. TCP is not even requested from the server. Default.
