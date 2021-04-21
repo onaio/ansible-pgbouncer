@@ -38,6 +38,7 @@ pgbouncer_apt_repository: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansib
 
 pgbouncer_listen_addr: 127.0.0.1
 pgbouncer_listen_port: 6432
+pgbouncer_max_client_conn: 100
 
 pgbouncer_enable_client_tls: false
 pgbouncer_client_tls_sslmode: require
