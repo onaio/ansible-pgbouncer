@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ona Engineering
-  description: Installs PgBouncer 
+  description: Installs PgBouncer
   company: Ona Systems Inc.
   license: Apache 2
   min_ansible_version: 2.2
@@ -9,7 +9,7 @@ galaxy_info:
     - name: Ubuntu
       verions:
       - trusty
-  categories:
+  galaxy_tags:
   - database
   - postgresql
   dependencies: []

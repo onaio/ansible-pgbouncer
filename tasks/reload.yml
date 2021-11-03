@@ -4,6 +4,8 @@
     - pgbouncer
     - pgbouncer-pause
   raw: "PGPASSWORD={{ pgsql_password }} /usr/bin/psql -U {{ pgsql_user }} -h 127.0.0.1 -p 6432 -c \"PAUSE;\" pgbouncer"
+  register: pgbouncer_pause
+  changed_when: pgbouncer_pause.rc == 0
 
 - name: Reload pgbouncer
   tags: pgbouncer
@@ -17,3 +19,5 @@
     - pgbouncer
     - pgbouncer-resume
   raw: "PGPASSWORD={{ pgsql_password }} /usr/bin/psql -U {{ pgsql_user }} -h 127.0.0.1 -p 6432 -c \"RESUME;\" pgbouncer"
+  register: pgbouncer_resume
+  changed_when: pgbouncer_resume.rc == 0
