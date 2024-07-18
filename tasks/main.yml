@@ -1,5 +1,5 @@
 ---
-- include: ubuntu.yml
+- include_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
 - name: Copy pgbouncer default
@@ -33,7 +33,7 @@
     mode: 0600
   when: pgbouncer_server_tls_ca_content|length > 0
 
-- include: reload.yml
+- include_tasks: reload.yml
   when: reload_not_restart
 
 - name: Restart pgbouncer
