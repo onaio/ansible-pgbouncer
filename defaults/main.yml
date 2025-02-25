@@ -26,7 +26,7 @@ pgbouncer_auth_type: "hba"
 pgbouncer_server_tls_sslmode: "verify-ca"
 
 # Contents of the TLS CA certificate the PostgreSQL database's certificate is signed using.
-pgbouncer_server_tls_ca_content: "{{ lookup('url', 'https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem', split_lines=false) }}"
+pgbouncer_server_tls_ca_content: "{{ lookup('url', 'https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem', split_lines=false) }}"
 
 # Whether to install the apt repository with PgBouncer
 pgbouncer_install_repository: true
