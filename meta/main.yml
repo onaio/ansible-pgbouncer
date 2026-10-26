@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: pgbouncer
+  namespace: onaio
   author: Ona Engineering
   description: Installs PgBouncer
   company: Ona Systems Inc.
