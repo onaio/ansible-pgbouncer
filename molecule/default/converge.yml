@@ -1,0 +1,15 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    pgsql_db: onadata
+    pgsql_host: 127.0.0.1
+    pgsql_user: onadata
+    pgsql_password: onadata
+    default_pool_size: 20
+    pgbouncer_version: "1.26.*"
+    pgbouncer_apt_postgresql_version: 17
+    pgbouncer_server_tls_sslmode: disable
+    pgbouncer_server_tls_ca_content: ""
+  roles:
+    - role: ../../..
