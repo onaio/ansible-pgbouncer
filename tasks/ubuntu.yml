@@ -4,12 +4,17 @@
     pkg: ca-certificates
     state: present
 
-- name: Add PgBouncer repository apt-key
-  apt_key:
-    id: "{{ pgbouncer_apt_key_id }}"
+- name: Add PgBouncer repository signing key
+  get_url:
     url: "{{ pgbouncer_apt_key_url }}"
-    state: present
-  when: pgbouncer_apt_key_url and pgbouncer_apt_key_id and pgbouncer_install_repository
+    dest: "/etc/apt/trusted.gpg.d/pgdg-{{ pgbouncer_apt_key_id }}.asc"
+    owner: root
+    group: root
+    mode: "0644"
+  when:
+    - pgbouncer_apt_key_url | default("") | length > 0
+    - pgbouncer_apt_key_id | default("") | length > 0
+    - pgbouncer_install_repository | bool
 
 - name: Add PgBouncer repository
   apt_repository:
