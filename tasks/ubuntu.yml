@@ -1,11 +1,11 @@
 ---
 - name: Make sure the CA certificates are available
-  apt:
+  ansible.builtin.apt:
     pkg: ca-certificates
     state: present
 
 - name: Add PgBouncer repository signing key
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ pgbouncer_apt_key_url }}"
     dest: "/etc/apt/trusted.gpg.d/pgdg-{{ pgbouncer_apt_key_id }}.asc"
     owner: root
@@ -17,14 +17,14 @@
     - pgbouncer_install_repository | bool
 
 - name: Add PgBouncer repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ pgbouncer_apt_repository }}"
     state: present
   when: pgbouncer_apt_repository | default('') | length != 0 and pgbouncer_install_repository
 
-- name: ensure pgbouncer is installed
-  apt:
+- name: Ensure pgbouncer is installed
+  ansible.builtin.apt:
     pkg: "pgbouncer={{ pgbouncer_version }}"
     state: present
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 600

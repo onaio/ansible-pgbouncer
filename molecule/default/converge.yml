@@ -11,5 +11,7 @@
     pgbouncer_apt_postgresql_version: 17
     pgbouncer_server_tls_sslmode: disable
     pgbouncer_server_tls_ca_content: ""
-  roles:
-    - role: ../../..
+  tasks:
+    - name: Run the role
+      ansible.builtin.include_role:
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
