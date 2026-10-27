@@ -1,45 +1,49 @@
 ---
-- include: ubuntu.yml
+- name: Install PgBouncer on Ubuntu
+  ansible.builtin.include_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
 - name: Copy pgbouncer default
   tags: pgbouncer
-  template:
+  ansible.builtin.template:
     src: "templates/etc/default/pgbouncer"
     dest: "/etc/default/pgbouncer"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: Copy pgbouncer config files
   tags: pgbouncer
-  template:
+  ansible.builtin.template:
     src: "templates/etc/pgbouncer/{{ item }}"
     dest: "/etc/pgbouncer/{{ item }}"
     owner: postgres
     group: postgres
-    mode: 0640
+    mode: "0640"
   with_items:
     - pgbouncer.ini
     - pg_hba.conf
     - userlist.txt
 
 - name: Copy the TLS CA certificate file
-  copy:
+  ansible.builtin.copy:
     content: "{{ pgbouncer_server_tls_ca_content }}"
     dest: "{{ pgbouncer_server_tls_ca_path }}"
     owner: postgres
     group: postgres
-    mode: 0600
+    mode: "0600"
   when: pgbouncer_server_tls_ca_content|length > 0
 
-- include: reload.yml
+- name: Reload PgBouncer
+  ansible.builtin.include_tasks: reload.yml
   when: reload_not_restart
 
 - name: Restart pgbouncer
-  tags: pgbouncer
+  tags:
+    - pgbouncer
+    - molecule-idempotence-notest
   when: not reload_not_restart
-  service:
+  ansible.builtin.service:
     name: pgbouncer
     state: restarted
-    enabled: yes
+    enabled: true

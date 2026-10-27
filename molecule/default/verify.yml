@@ -1,0 +1,27 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: Assert pgbouncer is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['pgbouncer.service'].state == 'running'
+
+    - name: Read the installed pgbouncer version
+      ansible.builtin.command: pgbouncer --version
+      register: pgbouncer_version_output
+      changed_when: false
+
+    - name: Assert pgbouncer 1.26 is installed
+      ansible.builtin.assert:
+        that:
+          - "'PgBouncer 1.26' in pgbouncer_version_output.stdout"
+
+    - name: Wait for pgbouncer to listen on its port
+      ansible.builtin.wait_for:
+        host: 127.0.0.1
+        port: 6432
+        timeout: 30

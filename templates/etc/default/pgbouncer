@@ -3,5 +3,5 @@
 # The default setting is shown below, uncomment and apply your changes
 # if you need to modify it.
 
-OPTS="-d -R /etc/pgbouncer/pgbouncer.ini"
+OPTS="-d /etc/pgbouncer/pgbouncer.ini"
 

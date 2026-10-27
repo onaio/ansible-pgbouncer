@@ -1,15 +1,19 @@
 ---
 galaxy_info:
+  role_name: pgbouncer
+  namespace: onaio
   author: Ona Engineering
   description: Installs PgBouncer
   company: Ona Systems Inc.
   license: Apache 2
-  min_ansible_version: 2.2
+  min_ansible_version: "2.2"
   platforms:
     - name: Ubuntu
-      verions:
-      - trusty
+      versions:
+        - jammy
+        - noble
   galaxy_tags:
-  - database
-  - postgresql
-  dependencies: []
+    - database
+    - postgresql
+
+dependencies: []
